@@ -34,14 +34,6 @@ ALLOWED_HOSTS = ['*']
 # Application definition
 
 INSTALLED_APPS = [
-    # Unfold Admin
-    "unfold",
-    "unfold.contrib.filters",
-    "unfold.contrib.forms",
-    "unfold.contrib.inlines",
-    "unfold.contrib.import_export",
-    "unfold.contrib.guardian",
-    "unfold.contrib.simple_history",
     # Apps de Django
     'django.contrib.admin',
     'django.contrib.auth',
@@ -62,7 +54,8 @@ INSTALLED_APPS = [
     # Apps del proyecto
     "dashboard.apps.DashboardConfig",
     "base.apps.BaseConfig",
-    "autenticacion.apps.AutenticacionConfig"
+    "autenticacion.apps.AutenticacionConfig",
+    "billeteras.apps.BilleterasConfig"
 ]
 
 MIDDLEWARE = [
@@ -190,11 +183,12 @@ ACCOUNT_LOGIN_METHODS = ['email']
 ACCOUNT_SIGNUP_FIELDS = ['email*', 'password1*', 'password2*']
 ACCOUNT_FORMS = {
     'signup': 'autenticacion.forms.CustomSignupForm',
+    'login': 'autenticacion.forms.CustomLoginForm',
 }
 
-LOGIN_REDIRECT_URL = '/' # URL a la que se redirige al usuario después de iniciar sesión
-LOGOUT_REDIRECT_URL = '/' # URL a la que se redirige al usuario después de cerrar sesión
-LOGIN_URL = '/cuenta/login/'  # URL de inicio de sesión
+LOGIN_REDIRECT_URL = 'dashboard' # URL a la que se redirige al usuario después de iniciar sesión
+LOGOUT_REDIRECT_URL = 'account_login' # URL a la que se redirige al usuario después de cerrar sesión
+LOGIN_URL = 'account_login'  # URL de inicio de sesión
 
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 

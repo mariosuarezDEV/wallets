@@ -1,0 +1,31 @@
+{% extends 'plantilla.html' %}
+{% block titulo %}Dashboard{% endblock %}
+
+{% block contenido %}
+    <div class="row g-2 align-items-center">
+        <div class="col-md-4">
+            <div class="card text-bg-success shadow-sm">
+                <div class="card-body text-center">
+                    <h3 class="card-title fs-4">Total de ingresos</h3>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card text-bg-light shadow-sm">
+                <div class="card-body text-center">
+                    <h3 class="card-title fs-3">Balance actual</h3>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card text-bg-danger shadow-sm">
+                <div class="card-body text-center">
+                    <h3 class="card-title fs-4">Total de gastos</h3>
+                </div>
+            </div>
+        </div>
+
+    </div>
+{% endblock %}

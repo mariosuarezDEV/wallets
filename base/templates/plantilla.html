@@ -14,6 +14,15 @@
     {% block contenido %}
 
     {% endblock %}
+{% if messages %}
+            <div class="alert alert-warning alert-dismissible fade show mt-4" role="alert">
+                <i class="fa-solid fa-circle-exclamation"></i>
+                {% for message in messages %}
+                    <strong>{{ message }}</strong>
+                {% endfor %}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        {% endif %}
 </div>
 <script src="https://kit.fontawesome.com/f89f8ae43b.js" crossorigin="anonymous"></script>
 </body>
