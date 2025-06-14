@@ -54,8 +54,14 @@ INSTALLED_APPS = [
     'allauth.account',
     'allauth.socialaccount',
     'allauth.socialaccount.providers.google',
+    # Diseño
+    'django_bootstrap5',
+    # Formularios
+    'crispy_forms',
+    'crispy_bootstrap5',
     # Apps del proyecto
-    "dashboard.apps.DashboardConfig"
+    "dashboard.apps.DashboardConfig",
+    "base.apps.BaseConfig"
 ]
 
 MIDDLEWARE = [
@@ -75,7 +81,9 @@ ROOT_URLCONF = 'wallet.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [
+            BASE_DIR / 'templates',
+        ],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -149,10 +157,41 @@ AUTHENTICATION_BACKENDS = [
 ]
 
 SOCIALACCOUNT_PROVIDERS = {
-
+"google": {
+        "APPS": [
+            {
+                "client_id": os.getenv('CLIENTE'),
+                "secret": os.getenv('SECRETO'),
+                "key": "",
+                "settings": {
+                    "scope": [
+                        "profile",
+                        "email",
+                    ],
+                    "auth_params": {
+                        "access_type": "online",
+                    },
+                },
+            },
+        ],
+        "SCOPE": [
+            "profile",
+            "email",
+        ],
+        "AUTH_PARAMS": {
+            "access_type": "online",
+        },
+    }
 }
 
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 # Registro con Email
 ACCOUNT_LOGIN_METHODS = ['email']
-ACCOUNT_SIGNUP_FIELDS = ['email*', 'username*', 'password1*', 'password2*']
+ACCOUNT_SIGNUP_FIELDS = ['email*', 'password1*', 'password2*']
+
+LOGIN_REDIRECT_URL = '/' # URL a la que se redirige al usuario después de iniciar sesión
+LOGOUT_REDIRECT_URL = '/' # URL a la que se redirige al usuario después de cerrar sesión
+LOGIN_URL = '/cuenta/login/'  # URL de inicio de sesión
+
+# Formularios
+CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
+CRISPY_TEMPLATE_PACK = "bootstrap5"
