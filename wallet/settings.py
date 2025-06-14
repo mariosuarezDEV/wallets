@@ -188,10 +188,15 @@ SOCIALACCOUNT_PROVIDERS = {
 # Registro con Email
 ACCOUNT_LOGIN_METHODS = ['email']
 ACCOUNT_SIGNUP_FIELDS = ['email*', 'password1*', 'password2*']
+ACCOUNT_FORMS = {
+    'signup': 'autenticacion.forms.CustomSignupForm',
+}
 
 LOGIN_REDIRECT_URL = '/' # URL a la que se redirige al usuario después de iniciar sesión
 LOGOUT_REDIRECT_URL = '/' # URL a la que se redirige al usuario después de cerrar sesión
 LOGIN_URL = '/cuenta/login/'  # URL de inicio de sesión
+
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 # Formularios
 CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
