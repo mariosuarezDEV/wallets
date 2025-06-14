@@ -4,87 +4,43 @@
     {% trans "Signup" %}
 {% endblock head_title %}
 {% block content %}
-    <div class="container py-5">
-        <div class="row justify-content-center">
-            <div class="col-12 col-md-8 col-lg-6 col-xl-5">
-                <div class="">
-                    <h1 class="text-center mb-4 display-4">
-                        {% trans "Sign Up" %}
-                    </h1>
-                    {% if not SOCIALACCOUNT_ONLY %}
-                        {% url 'account_signup' as action_url %}
-                        <form method="post" action="{{ login_url }}" novalidate>
-                            {% csrf_token %}
+    {% element h1 %}
+        {% trans "Sign Up" %}
+    {% endelement %}
+    {% setvar link %}
+        <a href="{{ login_url }}">
+    {% endsetvar %}
+{% setvar end_link %}
+    </a>
+{% endsetvar %}
+    {% element p %}
+        {% blocktranslate %}Already have an account? Then please {{ link }}sign in{{ end_link }}.{% endblocktranslate %}
+    {% endelement %}
+    {% if not SOCIALACCOUNT_ONLY %}
+        {% url 'account_signup' as action_url %}
+        {% element form form=form method="post" action=action_url tags="entrance,signup" %}
+            {% slot body %}
+                {% csrf_token %}
+                {% element fields form=form unlabeled=True %}
+                {% endelement %}
+                {{ redirect_field }}
+            {% endslot %}
+            {% slot actions %}
+                {% element button tags="prominent,signup" type="submit" %}
+                    {% trans "Sign Up" %}
+                {% endelement %}
+            {% endslot %}
+        {% endelement %}
+    {% endif %}
+    {% if PASSKEY_SIGNUP_ENABLED %}
+        {% element hr %}
+        {% endelement %}
+        {% element button href=signup_by_passkey_url tags="prominent,signup,outline,primary" %}
+            {% trans "Sign up using a passkey" %}
+        {% endelement %}
+    {% endif %}
+    {% if SOCIALACCOUNT_ENABLED %}
+        {% include "socialaccount/snippets/login.html" with page_layout="entrance" %}
+    {% endif %}
 
-                            {# Mostrar errores generales del formulario #}
-                            {% if form.non_field_errors %}
-                                <div class="alert alert-danger" role="alert">
-                                    {% for error in form.non_field_errors %}
-                                        {{ error }}
-                                    {% endfor %}
-                                </div>
-                            {% endif %}
-
-                            <!-- Campos de registro -->
-                            <div class="form-floating mb-3">
-                                <input type="{{ form.login.field.widget.input_type }}"
-                                       name="{{ form.login.name }}"
-                                       id="{{ form.login.id_for_label }}"
-                                       class="form-control {% if form.login.errors %}is-invalid{% endif %}"
-                                       placeholder="{% trans 'Email' %}"
-                                        {# Placeholder es útil aunque el label flote #}
-                                       value="{{ form.login.value|default:'' }}"
-                                       required
-                                       autofocus>
-                                <label for="{{ form.login.id_for_label }}"><i
-                                        class="fa-solid fa-at"></i> {% trans "Email" %}</label>
-                                {% if form.login.errors %}
-                                    <div class="invalid-feedback">
-                                        {% for error in form.login.errors %}
-                                            {{ error }}
-                                        {% endfor %}
-                                    </div>
-                                {% endif %}
-                            </div>
-
-                            <div class="form-floating mb-3">
-                                <input type="{{ form.password.field.widget.input_type }}"
-                                       name="{{ form.password.name }}"
-                                       id="{{ form.password.id_for_label }}"
-                                       class="form-control {% if form.password.errors %}is-invalid{% endif %}"
-                                       placeholder="{% trans 'Password' %}" {# Placeholder es útil #}
-                                       required>
-                                <label for="{{ form.password.id_for_label }}"><i
-                                        class="fa-solid fa-unlock"></i> {% trans "Password" %}</label>
-                                {% if form.password.errors %} {# Corregido: antes decía form.login.errors aquí #}
-                                    <div class="invalid-feedback">
-                                        {% for error in form.password.errors %}
-                                            {{ error }}
-                                        {% endfor %}
-                                    </div>
-                                {% endif %}
-                            </div>
-
-                            <div class="d-grid gap-2">
-                                <button type="submit" class="btn btn-primary">
-                                    <i class="fa-solid fa-right-to-bracket"></i> {% trans "Sign Up" %}
-                                </button>
-                            </div>
-                        </form>
-                    {% endif %}
-
-                    {% if LOGIN_BY_CODE_ENABLED or PASSKEY_LOGIN_ENABLED or SOCIALACCOUNT_ENABLED %}
-                        <hr class="my-4">
-                    {% endif %}
-
-                    <div class="text-center">
-                        {% if SOCIALACCOUNT_ENABLED %}
-                            {% include "socialaccount/snippets/login.html" with page_layout="entrance" %}
-                        {% endif %}
-                    </div>
-
-                </div>
-            </div>
-        </div>
-    </div>
 {% endblock content %}

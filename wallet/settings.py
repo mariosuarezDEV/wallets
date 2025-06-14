@@ -61,7 +61,8 @@ INSTALLED_APPS = [
     'crispy_bootstrap5',
     # Apps del proyecto
     "dashboard.apps.DashboardConfig",
-    "base.apps.BaseConfig"
+    "base.apps.BaseConfig",
+    "autenticacion.apps.AutenticacionConfig"
 ]
 
 MIDDLEWARE = [
