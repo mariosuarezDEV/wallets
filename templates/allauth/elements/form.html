@@ -1,0 +1,10 @@
+{% load allauth %}
+<form method="{{ attrs.method }}"
+      {% if attrs.action %}action="{{ attrs.action }}"{% endif %}>
+    <!-- Cuerpo del formulario -->
+    {% slot body %}
+    {% endslot %}
+    <!-- Boton de inicio de sesión -->
+    {% slot actions %}
+    {% endslot %}
+</form>
